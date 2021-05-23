@@ -26,6 +26,15 @@ module.exports = {
   imports(memory, createImports, instantiateSync, binary) {
     let instance; // Imports can reference this
     const myImports = {
+      module: {
+        input_len: (len) => {
+          return len;
+        }
+      },
+      env: {
+        memory: new WebAssembly.Memory({ initial: 256 }),
+        table: new WebAssembly.Table({ initial: 0, element: 'anyfunc' })
+      }
       // put your web assembly imports here, and return the module
     };
     instance = instantiateSync(binary, createImports(myImports));
